@@ -13,8 +13,15 @@ pygame.font.init()
 
 # 中文字体
 def get_chinese_font(size):
-    font_path = pygame.font.match_font('simhei') or "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc"
-    return pygame.font.Font(font_path, size)
+    candidates = [
+    pygame.font.match_font('simhei'),
+    "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc",
+    "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",]
+
+    for path in candidates:
+        if path and os.path.exists(path):
+            return pygame.font.Font(path, size)
+    return pygame.font.Font(None, size)
 
 # 屏幕设置
 WIDTH, HEIGHT = 750, 750
